@@ -1,0 +1,29 @@
+title: Stacks and Queues
+functions:
+  - name: is_valid_parentheses
+    doc: "Return true if every bracket in s ()[]{} is closed by the matching bracket in the correct order."
+    params: [{name: s, type: string}]
+    returns: bool
+    cases:
+      - {name: valid_simple, args: ["()"], expected: true}
+      - {name: valid_mixed, args: ["()[]{}"], expected: true}
+      - {name: valid_nested, args: ["{[]}"], expected: true}
+      - {name: invalid_wrong_type, args: ["(]"], expected: false}
+      - {name: invalid_interleaved, args: ["([)]"], expected: false}
+      - {name: hidden_empty_string, hidden: true, args: [""], expected: true}
+      - {name: hidden_only_open, hidden: true, args: ["(("], expected: false}
+      - {name: hidden_close_first, hidden: true, args: [")("], expected: false}
+      - {name: hidden_only_close, hidden: true, args: ["]"], expected: false}
+      - {name: hidden_unclosed_after_valid, hidden: true, args: ["()["], expected: false}
+  - name: daily_temperatures
+    doc: "For each day, how many days until a warmer temperature (0 if never)? Use a stack so it runs in O(n)."
+    params: [{name: temps, type: int_list}]
+    returns: int_list
+    cases:
+      - {name: temps_example, args: [[73,74,75,71,69,72,76,73]], expected: [1,1,4,2,1,1,0,0]}
+      - {name: temps_rising, args: [[30,40,50,60]], expected: [1,1,1,0]}
+      - {name: temps_short, args: [[30,60,90]], expected: [1,1,0]}
+      - {name: hidden_temps_empty, hidden: true, args: [[]], expected: []}
+      - {name: hidden_temps_single, hidden: true, args: [[5]], expected: [0]}
+      - {name: hidden_temps_falling, hidden: true, args: [[5,4,3]], expected: [0,0,0]}
+      - {name: hidden_temps_equal, hidden: true, args: [[5,5,5]], expected: [0,0,0]}

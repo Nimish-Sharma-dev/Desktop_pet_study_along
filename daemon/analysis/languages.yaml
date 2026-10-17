@@ -1,0 +1,189 @@
+# Language registry. Adding a grammar = adding a block here (+ pip install the grammar).
+# See README "How to add a language".
+#
+# kinds: maps language-NEUTRAL node kinds -> this grammar's node type names.
+# Rules in rules.py only ever talk about neutral kinds.
+defaults:
+  mutators: [append, add, push, push_back, emplace_back, insert, remove, pop, pop_back,
+             erase, clear, extend, remove_at, removeAt, removeFirst, removeLast, add_first,
+             addFirst, addLast, shift, unshift, splice, Add, Remove, RemoveAt, Insert, Clear]
+  rename_node_types: [identifier]
+  param_style: name_colon        # name_colon | name_first | name_last
+  foreach_iterable: null         # regex with named group (?P<it>...) applied to loop header
+  bound_patterns: []             # extra off-by-one regexes ({LEN} expands to the length-expression regex)
+  foreach_if_child: {}
+  extra_mutation: []
+  length_params: []              # parameter names that conventionally carry an array length (C/C++)
+
+languages:
+  python:
+    module: tree_sitter_python
+    factory: language
+    extensions: [.py]
+    param_style: name_colon
+    kinds:
+      function: [function_definition]
+      loop: [for_statement, while_statement]
+      foreach: [for_statement]
+      conditional: [if_statement, conditional_expression, match_statement]
+      call: [call]
+      comment: [comment]
+      string: [string]
+      block: [block, module]
+    foreach_iterable: '\bin\s+(?P<it>[A-Za-z_]\w*)\s*:?\s*$'
+    extra_mutation: ['\bdel\s+{X}\s*\[']
+
+  java:
+    module: tree_sitter_java
+    factory: language
+    extensions: [.java]
+    param_style: name_last
+    kinds:
+      function: [method_declaration, constructor_declaration]
+      loop: [for_statement, enhanced_for_statement, while_statement, do_statement]
+      foreach: [enhanced_for_statement]
+      conditional: [if_statement, ternary_expression, switch_expression, switch_statement]
+      call: [method_invocation]
+      comment: [line_comment, block_comment]
+      string: [string_literal]
+      block: [block, program, class_body]
+    foreach_iterable: ':\s*(?P<it>[A-Za-z_]\w*)\s*\)\s*$'
+
+  c:
+    module: tree_sitter_c
+    factory: language
+    extensions: [.c, .h]
+    param_style: name_last
+    kinds:
+      function: [function_definition]
+      loop: [for_statement, while_statement, do_statement]
+      foreach: []
+      conditional: [if_statement, conditional_expression, switch_statement]
+      call: [call_expression]
+      comment: [comment]
+      string: [string_literal]
+      block: [compound_statement, translation_unit]
+    length_params: [n, len, length, size, count, num]
+
+  cpp:
+    module: tree_sitter_cpp
+    factory: language
+    extensions: [.cpp, .cc, .cxx, .hpp]
+    param_style: name_last
+    kinds:
+      function: [function_definition]
+      loop: [for_statement, for_range_loop, while_statement, do_statement]
+      foreach: [for_range_loop]
+      conditional: [if_statement, conditional_expression, switch_statement]
+      call: [call_expression]
+      comment: [comment]
+      string: [string_literal, raw_string_literal]
+      block: [compound_statement, translation_unit, declaration_list, field_declaration_list]
+    length_params: [n, len, length, size, count, num]
+    foreach_iterable: ':\s*(?P<it>[A-Za-z_]\w*)\s*\)\s*$'
+
+  c_sharp:
+    module: tree_sitter_c_sharp
+    factory: language
+    extensions: [.cs]
+    param_style: name_last
+    kinds:
+      function: [method_declaration, local_function_statement, constructor_declaration]
+      loop: [for_statement, foreach_statement, while_statement, do_statement]
+      foreach: [foreach_statement]
+      conditional: [if_statement, conditional_expression, switch_statement, switch_expression]
+      call: [invocation_expression]
+      comment: [comment]
+      string: [string_literal, verbatim_string_literal, interpolated_string_expression]
+      block: [block, compilation_unit, declaration_list]
+    foreach_iterable: '\bin\s+(?P<it>[A-Za-z_]\w*)\s*\)\s*$'
+
+  go:
+    module: tree_sitter_go
+    factory: language
+    extensions: [.go]
+    param_style: name_first
+    kinds:
+      function: [function_declaration, method_declaration]
+      loop: [for_statement]
+      foreach: []
+      conditional: [if_statement, expression_switch_statement, type_switch_statement]
+      call: [call_expression]
+      comment: [comment]
+      string: [interpreted_string_literal, raw_string_literal]
+      block: [block, statement_list, source_file]
+    foreach_if_child: {for_statement: [range_clause]}
+    foreach_iterable: '\brange\s+(?P<it>[A-Za-z_]\w*)\s*$'
+    extra_mutation: ['\b{X}\s*=\s*append\(\s*{X}\b', '\bdelete\(\s*{X}\b']
+
+  rust:
+    module: tree_sitter_rust
+    factory: language
+    extensions: [.rs]
+    param_style: name_colon
+    kinds:
+      function: [function_item]
+      loop: [for_expression, while_expression, loop_expression]
+      foreach: [for_expression]
+      conditional: [if_expression, match_expression]
+      call: [call_expression, macro_invocation]
+      comment: [line_comment, block_comment]
+      string: [string_literal, raw_string_literal]
+      block: [block, source_file]
+    foreach_iterable: '\bin\s+&?(?:mut\s+)?(?P<it>[A-Za-z_]\w*)(?:\.(?:iter|iter_mut|into_iter)\(\))?\s*$'
+    bound_patterns: ['\.\.=\s*{LEN}(?!\s*-)']
+
+  javascript:
+    module: tree_sitter_javascript
+    factory: language
+    extensions: [.js, .mjs, .cjs, .jsx]
+    kinds:
+      function: [function_declaration, method_definition, function_expression, generator_function_declaration]
+      loop: [for_statement, for_in_statement, while_statement, do_statement]
+      foreach: [for_in_statement]
+      conditional: [if_statement, ternary_expression, switch_statement]
+      call: [call_expression]
+      comment: [comment]
+      string: [string, template_string]
+      block: [statement_block, program, class_body]
+    foreach_iterable: '\b(?:of|in)\s+(?P<it>[A-Za-z_$][\w$]*)\s*\)\s*$'
+
+  typescript:
+    module: tree_sitter_typescript
+    factory: language_typescript
+    extensions: [.ts]
+    kinds:
+      function: [function_declaration, method_definition, function_expression, generator_function_declaration]
+      loop: [for_statement, for_in_statement, while_statement, do_statement]
+      foreach: [for_in_statement]
+      conditional: [if_statement, ternary_expression, switch_statement]
+      call: [call_expression]
+      comment: [comment]
+      string: [string, template_string]
+      block: [statement_block, program, class_body]
+    foreach_iterable: '\b(?:of|in)\s+(?P<it>[A-Za-z_$][\w$]*)\s*\)\s*$'
+
+  kotlin:
+    module: tree_sitter_kotlin
+    factory: language
+    extensions: [.kt, .kts]
+    kinds:
+      function: [function_declaration]
+      loop: [for_statement, while_statement, do_while_statement]
+      foreach: [for_statement]
+      conditional: [if_expression, when_expression]
+      call: [call_expression]
+      comment: [line_comment, multiline_comment, block_comment]
+      string: [string_literal]
+      block: [statements, block, source_file, class_body]
+    rename_node_types: [identifier, simple_identifier]
+    foreach_iterable: '\bin\s+(?P<it>[A-Za-z_]\w*)\s*\)\s*$'
+    bound_patterns: ['\.\.\s*{LEN}(?!\s*-)']
+
+# Compiler/linter messages -> neutral diagnostic classes (kind=diagnostic findings)
+diagnostic_classes:
+  undefined_name: ['not defined', 'cannot find symbol', 'undefined', 'undeclared', 'unresolved reference', 'cannot find name', 'not found in this scope']
+  missing_return: ['missing return', 'must return', 'not all code paths']
+  syntax_error: ['syntax', 'expected', 'unexpected', 'unterminated', 'invalid token', 'parse error']
+  type_mismatch: ['type', 'incompatible', 'cannot convert', 'mismatched']
+  unused_value: ['unused', 'never used', 'declared but']

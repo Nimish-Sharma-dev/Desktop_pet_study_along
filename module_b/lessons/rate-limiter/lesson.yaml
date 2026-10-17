@@ -1,0 +1,87 @@
+id: rate-limiter
+title: Rate Limiter
+track: system_design
+difficulty: 3
+concepts:
+- api_design
+- bottlenecks
+- caching
+- capacity_estimation
+- data_modeling
+- failure_handling
+- replication
+- requirements_analysis
+- scaling
+- sharding
+- tradeoffs
+prerequisites: []
+estimated_minutes: 60
+common_mistakes:
+- id: rubric_gap_requirements
+  concepts:
+  - requirements_analysis
+  signals:
+  - rubric:requirements
+  seed_questions:
+  - What must the system do, and what is explicitly out of scope? Which numbers define 'big' here?
+- id: rubric_gap_estimation
+  concepts:
+  - capacity_estimation
+  signals:
+  - rubric:estimation
+  seed_questions:
+  - Walk through traffic, read/write ratio and storage. Where do your numbers come from?
+- id: rubric_gap_data_model
+  concepts:
+  - data_modeling
+  signals:
+  - rubric:data_model
+  seed_questions:
+  - What is the main key you look records up by, and why that datastore?
+- id: rubric_gap_api
+  concepts:
+  - api_design
+  signals:
+  - rubric:api
+  seed_questions:
+  - What does a client send, and what can come back when things go wrong?
+- id: rubric_gap_scaling
+  concepts:
+  - scaling
+  - caching
+  - sharding
+  signals:
+  - rubric:scaling
+  seed_questions:
+  - Which component hits its limit first as traffic grows ten times, and how do you split the load?
+- id: rubric_gap_bottlenecks
+  concepts:
+  - bottlenecks
+  signals:
+  - rubric:bottlenecks
+  seed_questions:
+  - If one key gets a thousand times more traffic than the rest, what breaks?
+- id: rubric_gap_failure_handling
+  concepts:
+  - failure_handling
+  - replication
+  signals:
+  - rubric:failure_handling
+  seed_questions:
+  - What does the user see when a dependency is down?
+- id: rubric_gap_tradeoffs
+  concepts:
+  - tradeoffs
+  signals:
+  - rubric:tradeoffs
+  seed_questions:
+  - What did you give up with your main choices, and when would you choose differently?
+- id: rubric_gap_diagram
+  concepts:
+  - scaling
+  signals:
+  - rubric:diagram
+  seed_questions:
+  - If you had to explain your design to a teammate in 30 seconds with a drawing, which boxes and arrows would you draw?
+languages:
+- any

@@ -1,0 +1,44 @@
+# Tutor daemon configuration.
+server:
+  host: 127.0.0.1        # local-only
+  port: 7777
+
+falkordb:
+  host: localhost
+  port: 6379
+
+ollama:
+  url: "http://localhost:11434"
+  model: "qwen2.5-coder:7b"
+
+debounce_seconds: 1.5          # quiet time after last edit before batch fires
+llm_timeout_seconds: 30        # timeout for background model generation
+min_confidence: 0.25
+sleep_after_seconds: 300       # pet sleeps after 5 minutes of inactivity
+
+cooldowns:
+  bubble_seconds: 15           # at most one proactive bubble per 15s
+  same_mistake_minutes: 5      # avoid repeating the same mistake_id within 5m
+
+allowlisted_paths:             # monitored folders
+  - "~/tutor-lessons"
+  - "./lessons"
+  - "lessons"
+
+default_student: "local-user"
+inspector: true                # default developer inspector telemetry enabled
+
+# Production wiring: real modules active
+mock:
+  analysis: false
+  tutor: false
+  graph: false
+
+voice:
+  enabled: false
+  hotkey: "ctrl+alt+space"
+  speak_replies: true
+  whisper_model: "models/ggml-base.en.bin"
+  whisper_cmd: ["whisper-cli", "-m", "{model}", "-f", "{wav}", "-nt", "-np"]
+  piper_model: "models/en_US-lessac-medium.onnx"
+  piper_cmd: ["piper", "--model", "{model}", "--output_file", "{out}"]

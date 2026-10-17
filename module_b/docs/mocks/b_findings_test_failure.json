@@ -1,0 +1,15 @@
+[
+  {
+    "kind": "test_failure",
+    "mistake_id": "boundary_off_by_one",
+    "concept_ids": [
+      "array_indexing",
+      "loop_invariants"
+    ],
+    "file": "solution.py",
+    "line": 6,
+    "evidence": "test_not_found_above raised IndexError (list index out of range at solution.py:6) (+2 more failing tests with the same cause)",
+    "confidence": 0.95,
+    "lesson_id": "binary-search"
+  }
+]

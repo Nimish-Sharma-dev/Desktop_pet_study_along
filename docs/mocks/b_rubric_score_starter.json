@@ -1,0 +1,230 @@
+{
+  "lesson_id": "url-shortener",
+  "axes": {
+    "requirements": 1,
+    "estimation": 1,
+    "data_model": 0,
+    "api": 0,
+    "scaling": 0,
+    "bottlenecks": 0,
+    "failure_handling": 0,
+    "tradeoffs": 0
+  },
+  "radar": {
+    "requirements": 1,
+    "estimation": 1,
+    "data_model": 0,
+    "api": 0,
+    "scaling": 0,
+    "bottlenecks": 0,
+    "failure_handling": 0,
+    "tradeoffs": 0,
+    "scalability": 0.1,
+    "fault_tolerance": 0.0,
+    "cost": 0.8
+  },
+  "total": 2,
+  "max": 40,
+  "passed": false,
+  "diagram": false,
+  "gaps": [
+    {
+      "axis": "data_model",
+      "score": 0,
+      "missing": [
+        "the code -> URL mapping",
+        "the primary / partition key",
+        "how codes are generated and kept unique",
+        "datastore choice",
+        "why that datastore"
+      ]
+    },
+    {
+      "axis": "api",
+      "score": 0,
+      "missing": [
+        "create operation",
+        "redirect operation",
+        "redirect status code choice",
+        "not found / expired / bad input",
+        "abuse protection / auth"
+      ]
+    },
+    {
+      "axis": "scaling",
+      "score": 0,
+      "missing": [
+        "load balancing",
+        "caching",
+        "partitioning / sharding",
+        "replication",
+        "horizontal scaling of stateless tiers"
+      ]
+    },
+    {
+      "axis": "bottlenecks",
+      "score": 0,
+      "missing": [
+        "hot keys / skew",
+        "single points of failure",
+        "datastore limits",
+        "mitigations",
+        "how the bottleneck is observed"
+      ]
+    },
+    {
+      "axis": "failure_handling",
+      "score": 0,
+      "missing": [
+        "redundancy / failover",
+        "retries / timeouts",
+        "backups / durability",
+        "graceful degradation",
+        "failure detection"
+      ]
+    },
+    {
+      "axis": "tradeoffs",
+      "score": 0,
+      "missing": [
+        "alternatives considered",
+        "reasoning behind choices",
+        "consistency vs availability",
+        "cost / operational complexity",
+        "accepted downsides"
+      ]
+    },
+    {
+      "axis": "requirements",
+      "score": 1,
+      "missing": [
+        "creating a short link",
+        "redirecting visitors",
+        "non-functional requirements",
+        "concrete scale targets"
+      ]
+    },
+    {
+      "axis": "estimation",
+      "score": 1,
+      "missing": [
+        "traffic (QPS)",
+        "bandwidth or memory/cache size",
+        "the arithmetic behind the numbers"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "kind": "pattern",
+      "mistake_id": "rubric_gap_data_model",
+      "concept_ids": [
+        "data_modeling"
+      ],
+      "file": "/home/claude/repo/lessons/url-shortener/starter/design.md",
+      "line": 13,
+      "evidence": "Data model: 0/5; not covered: the code -> URL mapping, the primary / partition key, how codes are generated and kept unique",
+      "confidence": 0.9,
+      "lesson_id": "url-shortener"
+    },
+    {
+      "kind": "pattern",
+      "mistake_id": "rubric_gap_api",
+      "concept_ids": [
+        "api_design"
+      ],
+      "file": "/home/claude/repo/lessons/url-shortener/starter/design.md",
+      "line": 17,
+      "evidence": "API: 0/5; not covered: create operation, redirect operation, redirect status code choice",
+      "confidence": 0.9,
+      "lesson_id": "url-shortener"
+    },
+    {
+      "kind": "pattern",
+      "mistake_id": "rubric_gap_scaling",
+      "concept_ids": [
+        "scaling",
+        "caching",
+        "sharding"
+      ],
+      "file": "/home/claude/repo/lessons/url-shortener/starter/design.md",
+      "line": 21,
+      "evidence": "Scaling: 0/5; not covered: load balancing, caching, partitioning / sharding",
+      "confidence": 0.9,
+      "lesson_id": "url-shortener"
+    },
+    {
+      "kind": "pattern",
+      "mistake_id": "rubric_gap_bottlenecks",
+      "concept_ids": [
+        "bottlenecks"
+      ],
+      "file": "/home/claude/repo/lessons/url-shortener/starter/design.md",
+      "line": 25,
+      "evidence": "Bottlenecks: 0/5; not covered: hot keys / skew, single points of failure, datastore limits",
+      "confidence": 0.9,
+      "lesson_id": "url-shortener"
+    },
+    {
+      "kind": "pattern",
+      "mistake_id": "rubric_gap_failure_handling",
+      "concept_ids": [
+        "failure_handling",
+        "replication"
+      ],
+      "file": "/home/claude/repo/lessons/url-shortener/starter/design.md",
+      "line": 29,
+      "evidence": "Failure handling: 0/5; not covered: redundancy / failover, retries / timeouts, backups / durability",
+      "confidence": 0.9,
+      "lesson_id": "url-shortener"
+    },
+    {
+      "kind": "pattern",
+      "mistake_id": "rubric_gap_tradeoffs",
+      "concept_ids": [
+        "tradeoffs"
+      ],
+      "file": "/home/claude/repo/lessons/url-shortener/starter/design.md",
+      "line": 33,
+      "evidence": "Trade-offs: 0/5; not covered: alternatives considered, reasoning behind choices, consistency vs availability",
+      "confidence": 0.9,
+      "lesson_id": "url-shortener"
+    },
+    {
+      "kind": "pattern",
+      "mistake_id": "rubric_gap_requirements",
+      "concept_ids": [
+        "requirements_analysis"
+      ],
+      "file": "/home/claude/repo/lessons/url-shortener/starter/design.md",
+      "line": 5,
+      "evidence": "Requirements: 1/5; not covered: creating a short link, redirecting visitors, non-functional requirements",
+      "confidence": 0.8,
+      "lesson_id": "url-shortener"
+    },
+    {
+      "kind": "pattern",
+      "mistake_id": "rubric_gap_estimation",
+      "concept_ids": [
+        "capacity_estimation"
+      ],
+      "file": "/home/claude/repo/lessons/url-shortener/starter/design.md",
+      "line": 9,
+      "evidence": "Estimation: 1/5; not covered: traffic (QPS), bandwidth or memory/cache size, the arithmetic behind the numbers",
+      "confidence": 0.8,
+      "lesson_id": "url-shortener"
+    },
+    {
+      "kind": "pattern",
+      "mistake_id": "rubric_gap_diagram",
+      "concept_ids": [
+        "scaling"
+      ],
+      "file": "/home/claude/repo/lessons/url-shortener/starter/design.md",
+      "line": 1,
+      "evidence": "no architecture diagram found (mermaid block, image link or diagram file)",
+      "confidence": 0.7,
+      "lesson_id": "url-shortener"
+    }
+  ]
+}

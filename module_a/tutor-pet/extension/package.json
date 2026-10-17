@@ -1,0 +1,50 @@
+{
+  "name": "tutor-pet",
+  "displayName": "Socratic Tutor Pet",
+  "description": "Feeds live (redacted, allowlisted) editor activity to the local Tutor Pet daemon.",
+  "version": "0.1.0",
+  "publisher": "local",
+  "engines": { "vscode": "^1.85.0" },
+  "categories": ["Education"],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      { "command": "tutor.runTests", "title": "Tutor: Run Tests" },
+      { "command": "tutor.togglePause", "title": "Tutor: Pause / Resume" },
+      { "command": "tutor.reply", "title": "Tutor: Reply to the Pet" }
+    ],
+    "viewsContainers": {
+      "activitybar": [{ "id": "tutor", "title": "Tutor", "icon": "media/pet.svg" }]
+    },
+    "views": {
+      "tutor": [{ "type": "webview", "id": "tutor.panel", "name": "Tutor" }]
+    },
+    "configuration": {
+      "title": "Tutor Pet",
+      "properties": {
+        "tutor.daemonUrl": { "type": "string", "default": "http://localhost:7777" },
+        "tutor.allowlistedFolders": {
+          "type": "array", "items": { "type": "string" }, "default": ["~/tutor-lessons"],
+          "description": "Only files inside these folders are ever observed. Keep in sync with the daemon's config.yaml."
+        },
+        "tutor.studentId": { "type": "string", "default": "local-user" },
+        "tutor.pauseOnStart": { "type": "boolean", "default": false },
+        "tutor.editCoalesceMs": { "type": "number", "default": 250 }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package"
+  },
+  "dependencies": { "ws": "^8.16.0" },
+  "devDependencies": {
+    "@types/node": "^18.19.0",
+    "@types/vscode": "^1.85.0",
+    "@types/ws": "^8.5.10",
+    "@vscode/vsce": "^2.24.0",
+    "typescript": "^5.3.0"
+  }
+}

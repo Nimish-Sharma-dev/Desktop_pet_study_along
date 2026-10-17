@@ -1,0 +1,25 @@
+id: two-pointers
+title: Two Pointers
+track: dsa
+difficulty: 2
+concepts: [two_pointers, array_indexing, time_complexity, edge_cases]
+prerequisites: [binary-search]
+estimated_minutes: 20
+common_mistakes:
+  - id: avoidable_nested_loops
+    concepts: [two_pointers, time_complexity]
+    signals: ["rule:nested_loop_quadratic", "test:test_hidden_large", "error:Timeout"]
+    seed_questions:
+      - "Your solution looks at every pair. The list is sorted - what does that let you conclude after comparing one pair?"
+      - "If the current sum is too big, which pointer can you move, and what do you know about the pairs you skip?"
+  - id: pointer_crosses_itself
+    concepts: [two_pointers, loop_invariants]
+    signals: ["test:test_hidden_single_*"]
+    seed_questions:
+      - "When left and right are the same index, are they two different elements? Should the loop still run?"
+  - id: boundary_off_by_one
+    concepts: [array_indexing]
+    signals: ["rule:loop_bound_off_by_one", "error:IndexError"]
+    seed_questions:
+      - "Which index should right start at for a list of length n?"
+languages: [python, javascript, go, java]

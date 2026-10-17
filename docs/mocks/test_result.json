@@ -1,0 +1,1 @@
+{"lesson_id":"binary-search","language":"python","duration_ms":120,"results":[{"name":"test_single_element","passed":false,"expected":"0","actual":"IndexError","error_type":"IndexError","message":"list index out of range"}]}

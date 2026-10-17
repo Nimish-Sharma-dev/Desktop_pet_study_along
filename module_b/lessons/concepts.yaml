@@ -1,0 +1,132 @@
+# Concept prerequisite graph. `requires` edges point from a concept to what it depends on:
+#   dp -> memoization -> recursion -> base_cases -> functions        arrays -> array_indexing
+# Consumed by: graph.ingest_lesson (C) to create (:Concept)-[:REQUIRES]->(:Concept),
+#              analysis.microlesson.root_weak_concept to find the deepest weak prerequisite.
+# `questions` seed Socratic prompts for micro-lessons. `drill` (optional) makes the micro-lesson runnable.
+concepts:
+  variables:        {name: Variables, track: dsa, requires: [], questions: ["What value does this variable hold right after this line runs?"]}
+  functions:        {name: Functions, track: dsa, requires: [variables], questions: ["What goes in, and what comes out of this function?"]}
+  conditionals:     {name: Conditionals, track: dsa, requires: [variables], questions: ["Which inputs make this condition true? Which make it false?"]}
+  loops:            {name: Loops, track: dsa, requires: [variables], questions: ["How many times does this loop body run for an input of size 3?"]}
+  arrays:           {name: Arrays and lists, track: dsa, requires: [variables], questions: ["What is stored at each position of this list after the loop?"]}
+  strings:          {name: Strings, track: dsa, requires: [arrays], questions: ["How is a string like a list of characters? Where do they differ?"]}
+  array_indexing:
+    name: Array indexing
+    track: dsa
+    requires: [arrays]
+    questions:
+      - "A list has 5 elements. What are the smallest and largest valid indexes?"
+      - "Which index does your loop read on its very last iteration?"
+    drill:
+      function: last_two_sum
+      doc: "Return the sum of the last two elements of nums (if there is only one element return it, if none return 0)."
+      params: [{name: nums, type: int_list}]
+      returns: int
+      reference: "def last_two_sum(nums):\n    total = 0\n    for i in range(max(0, len(nums) - 2), len(nums)):\n        total += nums[i]\n    return total\n"
+      cases:
+        - {name: two_or_more, args: [[1,2,3,4]], expected: 7}
+        - {name: exactly_two, args: [[5,6]], expected: 11}
+        - {name: hidden_one_element, hidden: true, args: [[9]], expected: 9}
+        - {name: hidden_empty, hidden: true, args: [[]], expected: 0}
+  edge_cases:       {name: Edge cases, track: dsa, requires: [conditionals], questions: ["What is the smallest input this function could receive? What does your code do with it?", "What happens with empty input?"]}
+  loop_invariants:
+    name: Loop invariants
+    track: dsa
+    requires: [loops, array_indexing]
+    questions:
+      - "What is true at the top of every iteration, before the body runs?"
+      - "After the loop ends, what does that fact tell you about the answer?"
+    drill:
+      function: running_max
+      doc: "Return a list where element i is the maximum of nums[0..i]."
+      params: [{name: nums, type: int_list}]
+      returns: int_list
+      reference: "def running_max(nums):\n    out = []\n    best = None\n    for x in nums:\n        if best is None or x > best:\n            best = x\n        out.append(best)\n    return out\n"
+      cases:
+        - {name: rising_then_flat, args: [[1,3,2,5,4]], expected: [1,3,3,5,5]}
+        - {name: negatives, args: [[-5,-7,-1]], expected: [-5,-5,-1]}
+        - {name: hidden_empty, hidden: true, args: [[]], expected: []}
+        - {name: hidden_single, hidden: true, args: [[4]], expected: [4]}
+  iteration_safety:
+    name: Safe iteration
+    track: dsa
+    requires: [loops, arrays]
+    questions: ["While you walk a list, what happens to the positions of the items after one you remove?"]
+    drill:
+      function: remove_evens
+      doc: "Return a NEW list with the even numbers removed. Do not modify the input while looping over it."
+      params: [{name: nums, type: int_list}]
+      returns: int_list
+      reference: "def remove_evens(nums):\n    return [x for x in nums if x % 2 != 0]\n"
+      cases:
+        - {name: mixed, args: [[1,2,3,4,5,6]], expected: [1,3,5]}
+        - {name: adjacent_evens, args: [[2,4,6,7]], expected: [7]}
+        - {name: hidden_all_even, hidden: true, args: [[2,4,6]], expected: []}
+        - {name: hidden_empty, hidden: true, args: [[]], expected: []}
+  time_complexity:  {name: Time complexity, track: dsa, requires: [loops], questions: ["If the input doubles, roughly what happens to the number of steps?"]}
+  binary_search:    {name: Binary search, track: dsa, requires: [loop_invariants, array_indexing], questions: ["What does each comparison let you throw away?"]}
+  two_pointers:     {name: Two pointers, track: dsa, requires: [array_indexing, loop_invariants], questions: ["What does moving each pointer rule out?"]}
+  sliding_window:   {name: Sliding window, track: dsa, requires: [two_pointers], questions: ["When the window slides one step, what enters and what leaves?"]}
+  base_cases:
+    name: Base cases
+    track: dsa
+    requires: [functions, conditionals]
+    questions:
+      - "What is the smallest input for which you already know the answer?"
+      - "Does every recursive call get closer to that input?"
+    drill:
+      function: countdown_sum
+      doc: "Return 1 + 2 + ... + n using recursion (n >= 0; the sum for n = 0 is 0). No loops."
+      params: [{name: n, type: int}]
+      returns: int
+      reference: "def countdown_sum(n):\n    if n <= 0:\n        return 0\n    return n + countdown_sum(n - 1)\n"
+      cases:
+        - {name: five, args: [5], expected: 15}
+        - {name: one, args: [1], expected: 1}
+        - {name: hidden_zero, hidden: true, args: [0], expected: 0}
+        - {name: hidden_hundred, hidden: true, args: [100], expected: 5050}
+  call_stack:       {name: The call stack, track: dsa, requires: [functions], questions: ["When this call returns, where does execution continue?"]}
+  recursion:        {name: Recursion, track: dsa, requires: [base_cases, call_stack], questions: ["How does the problem shrink with each call?"]}
+  tree_traversal:   {name: Tree traversal, track: dsa, requires: [recursion], questions: ["When does the node get visited relative to its two subtrees?"]}
+  pointers:         {name: Pointers and references, track: dsa, requires: [variables], questions: ["If you overwrite this reference, can you still reach what it used to point to?"]}
+  linked_lists:     {name: Linked lists, track: dsa, requires: [pointers], questions: ["What does the last node's next point to?"]}
+  stacks:           {name: Stacks, track: dsa, requires: [arrays], questions: ["Which item leaves a stack first?"]}
+  queues:           {name: Queues, track: dsa, requires: [arrays], questions: ["Which item leaves a queue first?"]}
+  hash_maps:
+    name: Hash maps
+    track: dsa
+    requires: [arrays, time_complexity]
+    questions: ["What question about earlier items can a map answer in one step?"]
+    drill:
+      function: count_distinct
+      doc: "Return how many distinct values appear in nums. Use a set or map, not nested loops."
+      params: [{name: nums, type: int_list}]
+      returns: int
+      reference: "def count_distinct(nums):\n    return len(set(nums))\n"
+      cases:
+        - {name: with_repeats, args: [[1,2,2,3,3,3]], expected: 3}
+        - {name: all_same, args: [[4,4,4]], expected: 1}
+        - {name: hidden_empty, hidden: true, args: [[]], expected: 0}
+        - {name: hidden_large, hidden: true, args: [{gen: range, args: [0, 200000, 1]}], expected: 200000}
+  graphs:           {name: Graphs, track: dsa, requires: [arrays, hash_maps], questions: ["Which nodes can you reach in one step from this node?"]}
+  bfs:              {name: Breadth-first search, track: dsa, requires: [graphs, queues], questions: ["In what order are nodes discovered, and why does that give shortest paths?"]}
+  dfs:              {name: Depth-first search, track: dsa, requires: [graphs, stacks, recursion], questions: ["How far does the search go before it backs up?"]}
+  memoization:      {name: Memoization, track: dsa, requires: [recursion, hash_maps], questions: ["Which calls repeat the same work?"]}
+  optimal_substructure: {name: Optimal substructure, track: dsa, requires: [recursion], questions: ["Is the best answer built from best answers to smaller problems?"]}
+  dp:               {name: Dynamic programming, track: dsa, requires: [memoization, optimal_substructure], questions: ["What is the smallest subproblem, and what does each larger one combine?"]}
+  debugging_by_tracing: {name: Debugging by tracing, track: dsa, requires: [variables], questions: ["Write down the value of each variable after every line for one small input. Where does reality first differ from your expectation?"]}
+  reading_error_messages: {name: Reading error messages, track: dsa, requires: [variables], questions: ["Which line does the message point at, and what does it say about that line?"]}
+  # ---- system design ----
+  requirements_analysis: {name: Requirements analysis, track: system_design, requires: [], questions: ["Who uses this and what must they be able to do? What is explicitly out of scope?"]}
+  capacity_estimation:   {name: Capacity estimation, track: system_design, requires: [requirements_analysis], questions: ["How many requests per second at peak, and how many bytes does each one store?"]}
+  data_modeling:         {name: Data modeling, track: system_design, requires: [requirements_analysis], questions: ["What is the main key you look records up by?"]}
+  api_design:            {name: API design, track: system_design, requires: [requirements_analysis], questions: ["What does a client send, and what can come back when things go wrong?"]}
+  caching:               {name: Caching, track: system_design, requires: [data_modeling], questions: ["Which reads repeat often enough to be worth remembering, and when does the copy go stale?"]}
+  scaling:               {name: Scaling, track: system_design, requires: [capacity_estimation], questions: ["Which component hits its limit first as traffic grows ten times?"]}
+  sharding:              {name: Sharding, track: system_design, requires: [scaling, data_modeling], questions: ["What key splits the data evenly, and what happens to a query that needs two shards?"]}
+  replication:           {name: Replication, track: system_design, requires: [scaling], questions: ["If one copy dies, which copy serves the next request, and could it be behind?"]}
+  bottlenecks:           {name: Bottlenecks, track: system_design, requires: [scaling], questions: ["If one key gets a thousand times more traffic than the rest, what breaks?"]}
+  failure_handling:      {name: Failure handling, track: system_design, requires: [replication], questions: ["What does the user see when this dependency is down?"]}
+  tradeoffs:             {name: Trade-offs, track: system_design, requires: [bottlenecks], questions: ["What did you give up by choosing this, and when would you choose differently?"]}
+  id_generation:         {name: ID generation, track: system_design, requires: [data_modeling], questions: ["How do you guarantee two servers never hand out the same id?"]}
+  rate_limiting:         {name: Rate limiting, track: system_design, requires: [api_design, caching], questions: ["Where is the counter stored, and what happens at the boundary between two time windows?"]}

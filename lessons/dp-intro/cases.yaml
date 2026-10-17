@@ -1,0 +1,25 @@
+title: Dynamic Programming Intro
+functions:
+  - name: climb_stairs
+    doc: "Number of distinct ways to climb n stairs taking 1 or 2 steps at a time (climb_stairs(0) = 1)."
+    params: [{name: n, type: int}]
+    returns: int
+    cases:
+      - {name: stairs_one, args: [1], expected: 1}
+      - {name: stairs_two, args: [2], expected: 2}
+      - {name: stairs_five, args: [5], expected: 8}
+      - {name: hidden_stairs_zero, hidden: true, args: [0], expected: 1}
+      - {name: hidden_stairs_forty_five, hidden: true, args: [45], expected: 1836311903}
+  - name: min_coins
+    doc: "Fewest coins (unlimited supply of each denomination) that sum to amount, or -1 if impossible. min_coins(coins, 0) = 0."
+    params: [{name: coins, type: int_list}, {name: amount, type: int}]
+    returns: int
+    cases:
+      - {name: coins_basic, args: [[1,2,5], 11], expected: 3}
+      - {name: coins_impossible, args: [[2], 3], expected: -1}
+      - {name: coins_zero_amount, args: [[1], 0], expected: 0}
+      - {name: coins_greedy_fails, args: [[1,3,4], 6], expected: 2}
+      - {name: hidden_coins_empty_set, hidden: true, args: [[], 5], expected: -1}
+      - {name: hidden_coins_unreachable, hidden: true, args: [[5,10], 7], expected: -1}
+      - {name: hidden_coins_larger, hidden: true, args: [[186,419,83,408], 6249], expected: 20}
+      - {name: hidden_coins_many, hidden: true, args: [[1,5,10,25], 10000], expected: 400}

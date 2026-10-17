@@ -1,0 +1,119 @@
+# Base rubric for system-design lessons. A lesson's rubric.yaml says `extends: ../_templates/system-design-rubric.yaml`
+# and replaces whole axes (usually requirements / data_model / api) with domain-specific checks.
+#
+# Scoring (deterministic, explainable - no LLM): each axis has 5 checks; a check is satisfied when any of its
+# case-insensitive regexes matches the axis' section of design.md (found by heading keywords; if the doc has no
+# such heading the whole document is searched but the axis is capped at 2). A section shorter than `min_words`
+# is capped at 1. Axis score = satisfied checks (0-5). This measures COVERAGE of the topics, not whether the
+# design is good - see README "Limits of the rubric scorer".
+min_words: 25
+pass: {axis_min: 3, total_min: 28}
+axes:
+  requirements:
+    title: Requirements
+    concepts: [requirements_analysis]
+    section: [requirement, scope, goals, use case]
+    checks:
+      - {id: functional, hint: "functional requirements", any: ['functional', 'use case', 'users? can', 'must support', 'the system (shall|must|should)']}
+      - {id: non_functional, hint: "non-functional requirements (latency, availability, durability, consistency)", any: ['non-?functional', 'availability', 'latency', 'durab', 'consisten']}
+      - {id: out_of_scope, hint: "what is out of scope / assumptions", any: ['out of scope', 'non-?goal', 'not in scope', 'assum']}
+      - {id: scale_targets, hint: "concrete scale targets", any: ['\d[\d,.]*\s*(k|m|b|million|billion|thousand)?\s*(users|requests|qps|rps|urls|writes|reads|per (second|day|month))']}
+      - {id: priorities, hint: "which requirements matter most", any: ['priorit', 'most important', 'critical', 'must[- ]have', 'nice[- ]to[- ]have']}
+  estimation:
+    title: Estimation
+    concepts: [capacity_estimation]
+    section: [estimat, capacity, back-of-envelope, back of the envelope, numbers]
+    checks:
+      - {id: traffic, hint: "traffic (QPS)", any: ['qps', 'rps', 'requests? per second', 'per second', 'writes? per (day|second)', 'reads? per']}
+      - {id: read_write_ratio, hint: "read/write ratio", any: ['read[- /]*(to[- ]*)?write', 'ratio', '\d+\s*:\s*1', '\d+\s*x\b']}
+      - {id: storage, hint: "storage volume", any: ['\d[\d,.]*\s*(kb|mb|gb|tb|pb)\b', 'storage', 'bytes']}
+      - {id: bandwidth_or_memory, hint: "bandwidth or memory/cache size", any: ['bandwidth', 'mbps', 'gbps', 'memory', '\bram\b', 'cache size', 'working set']}
+      - {id: arithmetic_shown, hint: "the arithmetic behind the numbers", any: ['\d\s*[x×*/]\s*\d', '≈', '~\s*\d', '=\s*\d']}
+  data_model:
+    title: Data model
+    concepts: [data_modeling]
+    section: [data model, schema, database, entities]
+    checks:
+      - {id: entities, hint: "entities / tables", any: ['table', 'collection', 'entity', 'schema', 'record', 'key[- ]value']}
+      - {id: keys, hint: "primary / partition keys and indexes", any: ['primary key', 'partition key', 'shard key', 'index', '\bpk\b', 'unique']}
+      - {id: fields, hint: "fields per entity", any: ['\bid\b', '_id', 'created', 'expires', 'timestamp', 'user']}
+      - {id: store_choice, hint: "which kind of datastore", any: ['sql', 'postgres', 'mysql', 'nosql', 'dynamo', 'cassandra', 'redis', 'mongo', 'key-value', 'kv store', 'relational']}
+      - {id: store_justification, hint: "why that datastore", any: ['because', 'since', 'so that', 'trade', 'chosen', 'choose', 'read-heavy', 'write-heavy']}
+  api:
+    title: API
+    concepts: [api_design]
+    section: [api, endpoint, interface]
+    checks:
+      - {id: http, hint: "operations / verbs", any: ['\b(GET|POST|PUT|DELETE|PATCH)\b']}
+      - {id: paths, hint: "resource paths", any: ['/[a-z{]']}
+      - {id: request_fields, hint: "request shape", any: ['request', 'body', 'params?', 'payload', 'json']}
+      - {id: response_codes, hint: "status codes / responses", any: ['\b(200|201|301|302|400|404|409|429|500|503)\b', 'status code']}
+      - {id: errors_auth, hint: "errors, auth or idempotency", any: ['error', 'auth', 'api[- ]key', 'token', 'idempot', 'rate limit']}
+  scaling:
+    title: Scaling
+    concepts: [scaling, caching, sharding]
+    section: [scal, high-level, architecture]
+    checks:
+      - {id: load_balancer, hint: "load balancing", any: ['load balanc', '\blb\b', 'nginx', 'haproxy', 'gateway']}
+      - {id: caching, hint: "caching", any: ['cache', 'caching', 'cdn', 'redis', 'memcache']}
+      - {id: partitioning, hint: "partitioning / sharding", any: ['shard', 'partition', 'consistent hash']}
+      - {id: replication, hint: "replication", any: ['replica', 'replication', 'leader', 'follower', 'read replica']}
+      - {id: stateless, hint: "horizontal scaling of stateless tiers", any: ['stateless', 'horizontal', 'scale[- ]out', 'autoscal']}
+  bottlenecks:
+    title: Bottlenecks
+    concepts: [bottlenecks]
+    section: [bottleneck, hot, limits, weak point]
+    checks:
+      - {id: hotspot, hint: "hot keys / skew", any: ['hot key', 'hot spot', 'hotspot', 'hot partition', 'skew', 'thundering herd']}
+      - {id: spof, hint: "single points of failure", any: ['single point of failure', 'spof', 'single point']}
+      - {id: db_limits, hint: "datastore limits", any: ['write throughput', 'connection', 'disk', 'iops', 'contention', 'lock']}
+      - {id: mitigation, hint: "mitigations", any: ['mitigat', 'to avoid', 'to reduce', 'solve by', 'address this', 'fix this', 'so that']}
+      - {id: monitoring, hint: "how the bottleneck is observed", any: ['monitor', 'metric', 'alert', 'dashboard', 'p99', 'observab']}
+  failure_handling:
+    title: Failure handling
+    concepts: [failure_handling, replication]
+    section: [fail, reliab, fault, resilien, availability]
+    checks:
+      - {id: redundancy, hint: "redundancy / failover", any: ['replica', 'redundan', 'multi[- ]az', 'multi[- ]region', 'failover', 'standby']}
+      - {id: retries, hint: "retries / timeouts", any: ['retr(y|ies)', 'backoff', 'timeout', 'circuit breaker', 'idempot']}
+      - {id: backups, hint: "backups / durability", any: ['backup', 'snapshot', 'durab', '\bwal\b', 'write-ahead', 'disaster']}
+      - {id: degradation, hint: "graceful degradation", any: ['degrad', 'fallback', 'graceful', 'shed', 'queue', 'buffer']}
+      - {id: detection, hint: "failure detection", any: ['health check', 'heartbeat', 'monitor', 'alert', 'detect']}
+  tradeoffs:
+    title: Trade-offs
+    concepts: [tradeoffs]
+    section: [trade, alternative, decision, consisten]
+    checks:
+      - {id: alternatives, hint: "alternatives considered", any: ['alternativ', 'instead of', 'versus', '\bvs\.?\b', 'compared (to|with)', 'option']}
+      - {id: reasoning, hint: "reasoning behind choices", any: ['because', 'since', 'therefore', 'this means', 'rationale', 'reason']}
+      - {id: consistency, hint: "consistency vs availability", any: ['consisten', 'cap theorem', 'eventual', 'strong', 'availability over']}
+      - {id: cost_complexity, hint: "cost / operational complexity", any: ['cost', 'complexity', 'simpler', 'operational', 'maintain', 'overhead']}
+      - {id: downsides, hint: "accepted downsides", any: ['downside', 'drawback', 'limitation', 'risk', 'we accept', 'at the expense', 'sacrific']}
+radar:
+  scalability:
+    from: {scaling: 0.4, estimation: 0.3, bottlenecks: 0.3}
+    checks:
+      - ['horizontal', 'scale[- ]out', 'stateless', 'autoscal']
+      - ['shard', 'partition', 'consistent hash']
+      - ['cache', 'cdn']
+      - ['queue', 'async', 'batch', 'kafka', 'stream']
+      - ['capacity', 'headroom', 'peak', 'growth']
+  fault_tolerance:
+    from: {failure_handling: 0.6, bottlenecks: 0.4}
+    checks:
+      - ['replica', 'replication', 'redundan']
+      - ['failover', 'standby', 'leader election']
+      - ['retr(y|ies)', 'backoff', 'timeout', 'circuit breaker']
+      - ['backup', 'snapshot', 'durab']
+      - ['health check', 'heartbeat', 'monitor', 'alert']
+  cost:
+    from: {estimation: 0.5, tradeoffs: 0.5}
+    checks:
+      - ['cost', '\$', 'budget', 'cheap', 'expens']
+      - ['ttl', 'expir', 'retention', 'evict', 'archiv', 'cold storage', 'tier']
+      - ['spot', 'reserved', 'autoscal', 'right-?siz']
+      - ['compress', 'dedup', 'batch']
+      - ['reduce (the )?(load|cost)', 'save[sd]?\b', 'offload']
+diagram:
+  files: [diagram.mmd, diagram.svg, diagram.png, diagram.drawio, diagram.puml]
+  inline: ['```mermaid', '!\[[^\]]*\]\(', '<svg', '@startuml']

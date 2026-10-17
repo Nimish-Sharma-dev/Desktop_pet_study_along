@@ -1,0 +1,9 @@
+# Module B shortcuts:  make -f Makefile.analysis <target>
+PY ?= python3
+.PHONY: deps test verify demo lessons mocks
+deps:     ; $(PY) -m pip install -r daemon/analysis/requirements.txt
+test:     ; cd daemon && $(PY) -m pytest analysis/tests -q
+verify:   ; cd lessons/_tools && PYTHONPATH=../../daemon $(PY) verify_lessons.py
+lessons:  ; $(PY) lessons/_tools/gen_lessons.py
+demo:     ; cd daemon && $(PY) -m analysis.demo
+mocks:    ; cd daemon && $(PY) -m analysis.demo --write-mocks

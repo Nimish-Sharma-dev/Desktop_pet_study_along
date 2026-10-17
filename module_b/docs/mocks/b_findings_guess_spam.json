@@ -1,0 +1,14 @@
+[
+  {
+    "kind": "guess_spam",
+    "mistake_id": "guess_and_check",
+    "concept_ids": [
+      "debugging_by_tracing"
+    ],
+    "file": "solution.py",
+    "line": 5,
+    "evidence": "last 3 edits only renamed variables; control flow and data flow are unchanged",
+    "confidence": 0.7,
+    "lesson_id": "binary-search"
+  }
+]

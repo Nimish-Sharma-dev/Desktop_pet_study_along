@@ -1,0 +1,20 @@
+id: recursion-basics
+title: Recursion Basics
+track: dsa
+difficulty: 1
+concepts: [recursion, base_cases, call_stack]
+prerequisites: []
+estimated_minutes: 20
+common_mistakes:
+  - id: missing_base_case
+    concepts: [base_cases, recursion]
+    signals: ["rule:missing_base_case", "error:RecursionError"]
+    seed_questions:
+      - "If you call your function with a very small input, what does it call next? Does that ever stop?"
+      - "What is the smallest input for which you already know the answer without calling yourself?"
+  - id: wrong_base_value
+    concepts: [base_cases, recursion]
+    signals: ["test:test_fib_one", "test:test_fib_two", "test:test_digits_single", "test:test_digits_zero"]
+    seed_questions:
+      - "Your recursion stops, but a tiny input gives the wrong answer. What should the function return for exactly that input, and what does yours return?"
+languages: [python, javascript, go, java]

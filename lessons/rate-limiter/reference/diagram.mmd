@@ -1,0 +1,5 @@
+flowchart LR
+  C[Clients] --> LB[Load balancer] --> G[API gateway + limiter middleware]
+  G --> R[(Redis shards + replicas)]
+  G --> S[Config service]
+  G --> B[Backend API]

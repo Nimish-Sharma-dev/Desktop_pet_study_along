@@ -1,0 +1,21 @@
+bugs:
+  - id: pop_without_emptiness_check
+    static: pop_from_empty
+    static_only: [javascript]      # JS pop() on [] returns undefined, so behaviour is accidentally right
+    patches:
+      python:     [{old: "if not stack or stack.pop() != pairs[ch]:", new: "if stack.pop() != pairs[ch]:"}]
+      javascript: [{old: "if (stack.length === 0 || stack.pop() !== pairs[ch]) return false;", new: "if (stack.pop() !== pairs[ch]) return false;"}]
+      go:         [{old: "if len(stack) == 0 || stack[len(stack)-1] != open {", new: "if stack[len(stack)-1] != open {"}]
+      java:       [{old: "if (stack.isEmpty() || stack.pop() != pairs.get(ch)) return false;", new: "if (stack.pop() != pairs.get(ch)) return false;"}]
+  - id: leftover_stack_ignored
+    patches:
+      python:     [{old: "    return not stack\n\n\ndef daily", new: "    return True\n\n\ndef daily"}]
+      javascript: [{old: "  return stack.length === 0;\n}\n\nfunction daily", new: "  return true;\n}\n\nfunction daily"}]
+      go:         [{old: "\treturn len(stack) == 0\n}\n\nfunc Daily", new: "\treturn true\n}\n\nfunc Daily"}]
+      java:       [{old: "        return stack.isEmpty();", new: "        return true;"}]
+  - id: warmer_uses_less_or_equal
+    patches:
+      python:     [{old: "temps[stack[-1]] < t", new: "temps[stack[-1]] <= t"}]
+      javascript: [{old: "temps[stack[stack.length - 1]] < temps[i]", new: "temps[stack[stack.length - 1]] <= temps[i]"}]
+      go:         [{old: "temps[stack[len(stack)-1]] < t", new: "temps[stack[len(stack)-1]] <= t"}]
+      java:       [{old: "temps[stack.peek()] < temps[i]", new: "temps[stack.peek()] <= temps[i]"}]

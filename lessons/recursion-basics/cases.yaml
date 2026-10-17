@@ -1,0 +1,24 @@
+title: Recursion Basics
+functions:
+  - name: fib
+    doc: "Return the n-th Fibonacci number (fib(0)=0, fib(1)=1) using recursion."
+    params: [{name: n, type: int}]
+    returns: int
+    cases:
+      - {name: fib_zero, args: [0], expected: 0}
+      - {name: fib_one, args: [1], expected: 1}
+      - {name: fib_two, args: [2], expected: 1}
+      - {name: fib_ten, args: [10], expected: 55}
+      - {name: hidden_fib_twenty, hidden: true, args: [20], expected: 6765}
+      - {name: hidden_fib_thirty, hidden: true, args: [30], expected: 832040}
+  - name: sum_digits
+    doc: "Return the sum of the decimal digits of n (n >= 0) using recursion, no loops."
+    params: [{name: n, type: int}]
+    returns: int
+    cases:
+      - {name: digits_zero, args: [0], expected: 0}
+      - {name: digits_single, args: [7], expected: 7}
+      - {name: digits_123, args: [123], expected: 6}
+      - {name: digits_9999, args: [9999], expected: 36}
+      - {name: hidden_digits_power_of_ten, hidden: true, args: [1000000], expected: 1}
+      - {name: hidden_digits_ten, hidden: true, args: [10], expected: 1}

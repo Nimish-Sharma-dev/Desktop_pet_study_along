@@ -1,0 +1,32 @@
+extends: ../_templates/system-design-rubric.yaml
+axes:
+  requirements:
+    title: Requirements
+    concepts: [requirements_analysis]
+    section: [requirement, scope, goals, use case]
+    checks:
+      - {id: shorten, hint: "creating a short link", any: ['shorten', 'create (a )?short', 'generate (a )?short']}
+      - {id: redirect, hint: "redirecting visitors", any: ['redirect']}
+      - {id: optional_features, hint: "optional features (aliases, expiry, analytics) and what is out of scope", any: ['custom alias', 'expir', 'analytics', 'out of scope', 'non-?goal']}
+      - {id: non_functional, hint: "non-functional requirements", any: ['latency', 'availability', 'durab', 'non-?functional']}
+      - {id: scale_targets, hint: "concrete scale targets", any: ['\d[\d,.]*\s*(k|m|b|million|billion)?\s*(urls|requests|qps|rps|writes|reads|redirects|per (second|day|month))']}
+  data_model:
+    title: Data model
+    concepts: [data_modeling, id_generation]
+    section: [data model, schema, database, entities]
+    checks:
+      - {id: mapping_table, hint: "the code -> URL mapping", any: ['short[_ ]?(code|key|url)', 'code\s*(->|→|=>|maps)', 'mapping']}
+      - {id: primary_key, hint: "the primary / partition key", any: ['primary key', 'partition key', '\bpk\b', 'unique']}
+      - {id: code_generation, hint: "how codes are generated and kept unique", any: ['base ?62', 'counter', 'hash', 'random', 'snowflake', 'collision', 'unique id']}
+      - {id: store_choice, hint: "datastore choice", any: ['sql', 'postgres', 'mysql', 'nosql', 'dynamo', 'cassandra', 'redis', 'key-value', 'relational']}
+      - {id: store_justification, hint: "why that datastore", any: ['because', 'since', 'read-heavy', 'no joins', 'trade']}
+  api:
+    title: API
+    concepts: [api_design]
+    section: [api, endpoint, interface]
+    checks:
+      - {id: create_endpoint, hint: "create operation", any: ['\bPOST\b']}
+      - {id: redirect_endpoint, hint: "redirect operation", any: ['\bGET\b']}
+      - {id: redirect_status, hint: "redirect status code choice", any: ['\b30[12]\b', '\b307\b', '\b308\b']}
+      - {id: error_status, hint: "not found / expired / bad input", any: ['\b(404|410|400|409)\b']}
+      - {id: abuse, hint: "abuse protection / auth", any: ['rate limit', 'api[- ]key', 'auth', 'token', 'captcha', '\b429\b']}

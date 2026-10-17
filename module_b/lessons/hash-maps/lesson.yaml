@@ -1,0 +1,24 @@
+id: hash-maps
+title: Hash Maps
+track: dsa
+difficulty: 2
+concepts: [hash_maps, time_complexity, edge_cases]
+prerequisites: [two-pointers]
+estimated_minutes: 25
+common_mistakes:
+  - id: avoidable_nested_loops
+    concepts: [hash_maps, time_complexity]
+    signals: ["rule:nested_loop_quadratic", "test:test_hidden_sum_large", "error:Timeout"]
+    seed_questions:
+      - "For each number you only need to know one thing about the numbers you have already seen. What is it, and what structure answers it instantly?"
+  - id: element_reused
+    concepts: [hash_maps, edge_cases]
+    signals: ["test:test_hidden_sum_no_self_reuse"]
+    seed_questions:
+      - "With a single element 5 and target 10, which entries are in your map at the moment you look up the partner? Should the current element be there yet?"
+  - id: counts_ignored
+    concepts: [hash_maps]
+    signals: ["test:test_hidden_anagram_same_letters_different_counts"]
+    seed_questions:
+      - "Two strings use the same set of letters. What extra information about each letter do you need to store?"
+languages: [python, javascript, go, java]

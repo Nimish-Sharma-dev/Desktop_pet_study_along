@@ -1,0 +1,22 @@
+bugs:
+  - id: loop_dereferences_without_check
+    static: missing_null_check
+    patches:
+      python:
+        - {old: "    while curr is not None:\n        nxt = curr.next\n        curr.next = prev\n        prev = curr\n        curr = nxt\n    return prev",
+           new: "    while curr.next is not None:\n        nxt = curr.next\n        curr.next = prev\n        prev = curr\n        curr = nxt\n    curr.next = prev\n    return curr"}
+      javascript:
+        - {old: "  while (curr !== null) {\n    const nxt = curr.next;\n    curr.next = prev;\n    prev = curr;\n    curr = nxt;\n  }\n  return prev;",
+           new: "  while (curr.next !== null) {\n    const nxt = curr.next;\n    curr.next = prev;\n    prev = curr;\n    curr = nxt;\n  }\n  curr.next = prev;\n  return curr;"}
+      go:
+        - {old: "\tfor curr != nil {\n\t\tnxt := curr.Next\n\t\tcurr.Next = prev\n\t\tprev = curr\n\t\tcurr = nxt\n\t}\n\treturn prev",
+           new: "\tfor curr.Next != nil {\n\t\tnxt := curr.Next\n\t\tcurr.Next = prev\n\t\tprev = curr\n\t\tcurr = nxt\n\t}\n\tcurr.Next = prev\n\treturn curr"}
+      java:
+        - {old: "        while (curr != null) {\n            ListNode nxt = curr.next;\n            curr.next = prev;\n            prev = curr;\n            curr = nxt;\n        }\n        return prev;",
+           new: "        while (curr.next != null) {\n            ListNode nxt = curr.next;\n            curr.next = prev;\n            prev = curr;\n            curr = nxt;\n        }\n        curr.next = prev;\n        return curr;"}
+  - id: forgot_to_advance_prev
+    patches:
+      python:     [{old: "        prev = curr\n", new: ""}]
+      javascript: [{old: "    prev = curr;\n", new: ""}]
+      go:         [{old: "\t\tprev = curr\n", new: ""}]
+      java:       [{old: "            prev = curr;\n", new: ""}]

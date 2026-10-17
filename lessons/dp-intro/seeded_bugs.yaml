@@ -1,0 +1,88 @@
+bugs:
+  - id: naive_recursive_stairs
+    full:
+      python: |
+        def climb_stairs(n):
+            if n <= 1:
+                return 1
+            return climb_stairs(n - 1) + climb_stairs(n - 2)
+
+        def min_coins(coins, amount):
+            inf = amount + 1
+            dp = [0] + [inf] * amount
+            for a in range(1, amount + 1):
+                for c in coins:
+                    if c <= a and dp[a - c] + 1 < dp[a]:
+                        dp[a] = dp[a - c] + 1
+            return dp[amount] if dp[amount] != inf else -1
+      javascript: |
+        function climbStairs(n) {
+          if (n <= 1) return 1;
+          return climbStairs(n - 1) + climbStairs(n - 2);
+        }
+        function minCoins(coins, amount) {
+          const inf = amount + 1;
+          const dp = new Array(amount + 1).fill(inf);
+          dp[0] = 0;
+          for (let a = 1; a <= amount; a++) {
+            for (const c of coins) {
+              if (c <= a && dp[a - c] + 1 < dp[a]) dp[a] = dp[a - c] + 1;
+            }
+          }
+          return dp[amount] !== inf ? dp[amount] : -1;
+        }
+        module.exports = { climbStairs, minCoins };
+      go: |
+        package solution
+
+        func ClimbStairs(n int) int {
+        	if n <= 1 {
+        		return 1
+        	}
+        	return ClimbStairs(n-1) + ClimbStairs(n-2)
+        }
+
+        func MinCoins(coins []int, amount int) int {
+        	inf := amount + 1
+        	dp := make([]int, amount+1)
+        	for i := 1; i <= amount; i++ {
+        		dp[i] = inf
+        	}
+        	for a := 1; a <= amount; a++ {
+        		for _, c := range coins {
+        			if c <= a && dp[a-c]+1 < dp[a] {
+        				dp[a] = dp[a-c] + 1
+        			}
+        		}
+        	}
+        	if dp[amount] != inf {
+        		return dp[amount]
+        	}
+        	return -1
+        }
+      java: |
+        import java.util.Arrays;
+        public class Solution {
+            public static int climbStairs(int n) {
+                if (n <= 1) return 1;
+                return climbStairs(n - 1) + climbStairs(n - 2);
+            }
+            public static int minCoins(int[] coins, int amount) {
+                int inf = amount + 1;
+                int[] dp = new int[amount + 1];
+                Arrays.fill(dp, inf);
+                dp[0] = 0;
+                for (int a = 1; a <= amount; a++) {
+                    for (int c : coins) {
+                        if (c <= a && dp[a - c] + 1 < dp[a]) dp[a] = dp[a - c] + 1;
+                    }
+                }
+                return dp[amount] != inf ? dp[amount] : -1;
+            }
+        }
+  - id: unreachable_returns_sentinel
+    patches:
+      python:     [{old: "return dp[amount] if dp[amount] != inf else -1", new: "return dp[amount]"}]
+      javascript: [{old: "return dp[amount] !== inf ? dp[amount] : -1;", new: "return dp[amount];"}]
+      go:         [{old: "\tif dp[amount] != inf {\n\t\treturn dp[amount]\n\t}\n\treturn -1", new: "\treturn dp[amount]"}]
+      java:       [{old: "return dp[amount] != inf ? dp[amount] : -1;", new: "return dp[amount];"}]

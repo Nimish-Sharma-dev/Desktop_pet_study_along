@@ -1,0 +1,74 @@
+bugs:
+  - id: store_before_lookup
+    patches:
+      python:     [{old: "        j = seen.get(target - x)\n        if j is not None:\n            return [j, i]\n        seen[x] = i\n", new: "        seen[x] = i\n        j = seen.get(target - x)\n        if j is not None:\n            return [j, i]\n"}]
+      javascript: [{old: "    const j = seen.get(target - nums[i]);\n    if (j !== undefined) return [j, i];\n    seen.set(nums[i], i);\n", new: "    seen.set(nums[i], i);\n    const j = seen.get(target - nums[i]);\n    if (j !== undefined) return [j, i];\n"}]
+      go:         [{old: "\t\tif j, ok := seen[target-x]; ok {\n\t\t\treturn []int{j, i}\n\t\t}\n\t\tseen[x] = i\n", new: "\t\tseen[x] = i\n\t\tif j, ok := seen[target-x]; ok {\n\t\t\treturn []int{j, i}\n\t\t}\n"}]
+      java:       [{old: "            Integer j = seen.get(target - nums[i]);\n            if (j != null) return new int[]{j, i};\n            seen.put(nums[i], i);\n", new: "            seen.put(nums[i], i);\n            Integer j = seen.get(target - nums[i]);\n            if (j != null) return new int[]{j, i};\n"}]
+  - id: brute_force_pairs
+    static: avoidable_nested_loops
+    full:
+      python: |
+        def two_sum(nums, target):
+            for i in range(len(nums)):
+                for j in range(i + 1, len(nums)):
+                    if nums[i] + nums[j] == target:
+                        return [i, j]
+            return []
+
+        def is_anagram(s, t):
+            return sorted(s) == sorted(t)
+      javascript: |
+        function twoSum(nums, target) {
+          for (let i = 0; i < nums.length; i++) {
+            for (let j = i + 1; j < nums.length; j++) {
+              if (nums[i] + nums[j] === target) return [i, j];
+            }
+          }
+          return [];
+        }
+        function isAnagram(s, t) {
+          return [...s].sort().join('') === [...t].sort().join('');
+        }
+        module.exports = { twoSum, isAnagram };
+      go: |
+        package solution
+
+        import "sort"
+
+        func TwoSum(nums []int, target int) []int {
+        	for i := 0; i < len(nums); i++ {
+        		for j := i + 1; j < len(nums); j++ {
+        			if nums[i]+nums[j] == target {
+        				return []int{i, j}
+        			}
+        		}
+        	}
+        	return []int{}
+        }
+
+        func IsAnagram(s string, t string) bool {
+        	a, b := []rune(s), []rune(t)
+        	sort.Slice(a, func(i, j int) bool { return a[i] < a[j] })
+        	sort.Slice(b, func(i, j int) bool { return b[i] < b[j] })
+        	return string(a) == string(b)
+        }
+      java: |
+        import java.util.Arrays;
+        public class Solution {
+            public static int[] twoSum(int[] nums, int target) {
+                for (int i = 0; i < nums.length; i++) {
+                    for (int j = i + 1; j < nums.length; j++) {
+                        if (nums[i] + nums[j] == target) return new int[]{i, j};
+                    }
+                }
+                return new int[]{};
+            }
+            public static boolean isAnagram(String s, String t) {
+                char[] a = s.toCharArray();
+                char[] b = t.toCharArray();
+                Arrays.sort(a);
+                Arrays.sort(b);
+                return Arrays.equals(a, b);
+            }
+        }

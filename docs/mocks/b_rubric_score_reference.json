@@ -1,0 +1,32 @@
+{
+  "lesson_id": "url-shortener",
+  "axes": {
+    "requirements": 5,
+    "estimation": 5,
+    "data_model": 5,
+    "api": 5,
+    "scaling": 5,
+    "bottlenecks": 5,
+    "failure_handling": 5,
+    "tradeoffs": 5
+  },
+  "radar": {
+    "requirements": 5,
+    "estimation": 5,
+    "data_model": 5,
+    "api": 5,
+    "scaling": 5,
+    "bottlenecks": 5,
+    "failure_handling": 5,
+    "tradeoffs": 5,
+    "scalability": 4.5,
+    "fault_tolerance": 5.0,
+    "cost": 4.0
+  },
+  "total": 40,
+  "max": 40,
+  "passed": true,
+  "diagram": true,
+  "gaps": [],
+  "findings": []
+}

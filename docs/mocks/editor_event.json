@@ -1,0 +1,1 @@
+{"type":"edit","ts":1730000000,"file":"/home/me/tutor-lessons/binary-search/solution.py","language":"python","content":"def search(arr, t):\n    lo, hi = 0, len(arr)\n    while lo <= hi:\n        ...","cursor":{"line":3,"col":5},"selection":null,"diagnostics":[],"student_id":"local-user"}

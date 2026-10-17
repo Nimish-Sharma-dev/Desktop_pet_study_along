@@ -1,0 +1,106 @@
+{
+  "lesson_id": "binary-search",
+  "language": "python",
+  "duration_ms": 885,
+  "results": [
+    {
+      "name": "test_found_middle",
+      "passed": true,
+      "expected": null,
+      "actual": null,
+      "error_type": null,
+      "message": "",
+      "hidden": false
+    },
+    {
+      "name": "test_found_first",
+      "passed": true,
+      "expected": null,
+      "actual": null,
+      "error_type": null,
+      "message": "",
+      "hidden": false
+    },
+    {
+      "name": "test_found_last",
+      "passed": true,
+      "expected": null,
+      "actual": null,
+      "error_type": null,
+      "message": "",
+      "hidden": false
+    },
+    {
+      "name": "test_not_found_inside",
+      "passed": true,
+      "expected": null,
+      "actual": null,
+      "error_type": null,
+      "message": "",
+      "hidden": false
+    },
+    {
+      "name": "test_not_found_above",
+      "passed": false,
+      "expected": "-1",
+      "actual": null,
+      "error_type": "IndexError",
+      "message": "IndexError: list index out of range at solution.py:6",
+      "hidden": false
+    },
+    {
+      "name": "test_hidden_empty",
+      "passed": false,
+      "expected": null,
+      "actual": null,
+      "error_type": "IndexError",
+      "message": "hidden edge-case test failed (IndexError) at solution.py:6",
+      "hidden": true
+    },
+    {
+      "name": "test_hidden_single_found",
+      "passed": true,
+      "expected": null,
+      "actual": null,
+      "error_type": null,
+      "message": "",
+      "hidden": true
+    },
+    {
+      "name": "test_hidden_single_missing",
+      "passed": false,
+      "expected": null,
+      "actual": null,
+      "error_type": "IndexError",
+      "message": "hidden edge-case test failed (IndexError) at solution.py:6",
+      "hidden": true
+    },
+    {
+      "name": "test_hidden_two_elements",
+      "passed": true,
+      "expected": null,
+      "actual": null,
+      "error_type": null,
+      "message": "",
+      "hidden": true
+    },
+    {
+      "name": "test_hidden_below_min",
+      "passed": true,
+      "expected": null,
+      "actual": null,
+      "error_type": null,
+      "message": "",
+      "hidden": true
+    },
+    {
+      "name": "test_hidden_large",
+      "passed": true,
+      "expected": null,
+      "actual": null,
+      "error_type": null,
+      "message": "",
+      "hidden": true
+    }
+  ]
+}

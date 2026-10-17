@@ -1,0 +1,25 @@
+id: graph-bfs-dfs
+title: Graphs - BFS and DFS
+track: dsa
+difficulty: 3
+concepts: [graphs, bfs, dfs, stacks, queues, recursion]
+prerequisites: [recursion-basics]
+estimated_minutes: 35
+common_mistakes:
+  - id: no_visited_tracking
+    concepts: [graphs, bfs]
+    signals: ["test:test_hidden_path_cycle_terminates", "error:Timeout"]
+    seed_questions:
+      - "In a graph with a cycle, what stops your traversal from walking around it forever?"
+      - "When exactly should a node be marked as seen: when you queue it or when you take it out? What changes?"
+  - id: component_miscount
+    concepts: [graphs, dfs]
+    signals: ["test:test_components_*", "test:test_hidden_components_*"]
+    seed_questions:
+      - "Which nodes does your loop start a new search from? Could any node be skipped or counted twice?"
+  - id: deep_recursion_overflow
+    concepts: [recursion, call_stack, dfs]
+    signals: ["error:RecursionError", "test:test_hidden_*deep_chain", "test:test_hidden_path_long_chain"]
+    seed_questions:
+      - "How deep does the call stack get on a graph that is one long chain of 3,000 nodes? What could replace the call stack?"
+languages: [python, javascript, go, java]

@@ -1,0 +1,26 @@
+id: binary-search
+title: Binary Search
+track: dsa
+difficulty: 2
+concepts: [binary_search, array_indexing, loop_invariants, edge_cases]
+prerequisites: []
+estimated_minutes: 25
+common_mistakes:
+  - id: boundary_off_by_one
+    concepts: [array_indexing, loop_invariants]
+    signals: ["rule:loop_bound_off_by_one", "error:IndexError", "test:test_not_found_above"]
+    seed_questions:
+      - "What is the largest index you are allowed to read from this list? What value does your upper bound start at?"
+      - "Walk through [1,3,5,7,9] searching for 10. Which index does mid take on the last step?"
+  - id: loop_does_not_progress
+    concepts: [loop_invariants, binary_search]
+    signals: ["error:Timeout"]
+    seed_questions:
+      - "After one pass of the loop, which of lo, hi or mid is guaranteed to be different from before? Is that true on every branch?"
+      - "Try a two-element list. After you rule out mid, what does that tell you about where the target can be?"
+  - id: premature_loop_exit
+    concepts: [loop_invariants, edge_cases]
+    signals: ["test:test_hidden_single_*", "test:test_found_first"]
+    seed_questions:
+      - "When lo and hi point at the same element, is that element still a candidate? Does your loop condition ever look at it?"
+languages: [python, javascript, go, java]

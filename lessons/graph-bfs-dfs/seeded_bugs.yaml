@@ -1,0 +1,13 @@
+bugs:
+  - id: bfs_without_visited_check
+    patches:
+      python:     [{old: "            if nb not in dist:\n                dist[nb] = dist[node] + 1\n                queue.append(nb)", new: "            dist[nb] = dist.get(nb, dist[node] + 1)\n            queue.append(nb)"}]
+      javascript: [{old: "      if (!dist.has(nb)) {\n        dist.set(nb, dist.get(node) + 1);\n        queue.push(nb);\n      }", new: "      if (!dist.has(nb)) dist.set(nb, dist.get(node) + 1);\n      queue.push(nb);"}]
+      go:         [{old: "\t\t\tif _, ok := dist[nb]; !ok {\n\t\t\t\tdist[nb] = dist[node] + 1\n\t\t\t\tqueue = append(queue, nb)\n\t\t\t}", new: "\t\t\tif _, ok := dist[nb]; !ok {\n\t\t\t\tdist[nb] = dist[node] + 1\n\t\t\t}\n\t\t\tqueue = append(queue, nb)"}]
+      java:       [{old: "                if (!dist.containsKey(nb)) {\n                    dist.put(nb, dist.get(node) + 1);\n                    queue.add(nb);\n                }", new: "                if (!dist.containsKey(nb)) dist.put(nb, dist.get(node) + 1);\n                queue.add(nb);"}]
+  - id: components_skip_node_zero
+    patches:
+      python:     [{old: "for start in range(n):", new: "for start in range(1, n):"}]
+      javascript: [{old: "for (let start = 0; start < n; start++)", new: "for (let start = 1; start < n; start++)"}]
+      go:         [{old: "for start := 0; start < n; start++", new: "for start := 1; start < n; start++"}]
+      java:       [{old: "for (int start = 0; start < n; start++)", new: "for (int start = 1; start < n; start++)"}]

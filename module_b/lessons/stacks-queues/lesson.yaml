@@ -1,0 +1,24 @@
+id: stacks-queues
+title: Stacks and Queues
+track: dsa
+difficulty: 2
+concepts: [stacks, queues, edge_cases, time_complexity]
+prerequisites: [recursion-basics]
+estimated_minutes: 30
+common_mistakes:
+  - id: pop_from_empty
+    concepts: [stacks, edge_cases]
+    signals: ["rule:missing_null_check", "test:test_hidden_only_close", "test:test_hidden_close_first", "error:IndexError"]
+    seed_questions:
+      - "What is in your stack when the very first character is a closing bracket? What does your next line do with it?"
+  - id: leftover_not_checked
+    concepts: [stacks, edge_cases]
+    signals: ["test:test_hidden_only_open", "test:test_hidden_unclosed_after_valid"]
+    seed_questions:
+      - "When the loop ends, what does a non-empty stack tell you? Where in your code is that looked at?"
+  - id: wrong_comparison
+    concepts: [stacks]
+    signals: ["test:test_temps_*", "test:test_hidden_temps_*"]
+    seed_questions:
+      - "For equal temperatures, should one day count as 'warmer' than the other? Which comparison operator reflects that?"
+languages: [python, javascript, go, java]

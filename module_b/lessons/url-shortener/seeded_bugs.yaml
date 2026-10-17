@@ -1,0 +1,5 @@
+# Design lessons: "seeded bugs" are deleted sections; the scorer must report that axis as a gap.
+bugs:
+  - {id: no_estimation, remove_section: Estimation, expect_gap: estimation, expect_mistake: rubric_gap_estimation}
+  - {id: no_failure_handling, remove_section: Failure handling, expect_gap: failure_handling, expect_mistake: rubric_gap_failure_handling}
+  - {id: no_tradeoffs, remove_section: Trade-offs, expect_gap: tradeoffs, expect_mistake: rubric_gap_tradeoffs}

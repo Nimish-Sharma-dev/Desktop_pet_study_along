@@ -1,0 +1,15 @@
+[
+  {
+    "kind": "pattern",
+    "mistake_id": "boundary_off_by_one",
+    "concept_ids": [
+      "array_indexing",
+      "loop_invariants"
+    ],
+    "file": "solution.py",
+    "line": 4,
+    "evidence": "`hi` starts at the collection length but is used as an inclusive bound",
+    "confidence": 0.6,
+    "lesson_id": "binary-search"
+  }
+]

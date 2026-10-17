@@ -1,0 +1,1 @@
+{"kind":"test_failure","mistake_id":"boundary_off_by_one","concept_ids":["array_indexing"],"file":"/home/me/tutor-lessons/binary-search/solution.py","line":3,"evidence":"single-element test raised IndexError","confidence":0.9,"lesson_id":"binary-search"}

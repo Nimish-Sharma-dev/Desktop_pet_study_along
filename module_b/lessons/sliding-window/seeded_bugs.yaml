@@ -1,0 +1,73 @@
+bugs:
+  - id: loop_one_past_the_end
+    static: boundary_off_by_one
+    patches:
+      python:     [{old: "range(k, len(nums))", new: "range(k, len(nums) + 1)"}]
+      javascript: [{old: "for (let i = k; i < nums.length; i++)", new: "for (let i = k; i <= nums.length; i++)"}]
+      go:         [{old: "for i := k; i < len(nums); i++", new: "for i := k; i <= len(nums); i++"}]
+      java:       [{old: "for (int i = k; i < nums.length; i++)", new: "for (int i = k; i <= nums.length; i++)"}]
+  - id: best_starts_at_zero
+    patches:
+      python:     [{old: "best = window", new: "best = 0"}]
+      javascript: [{old: "let best = window;", new: "let best = 0;"}]
+      go:         [{old: "best := window", new: "best := 0"}]
+      java:       [{old: "long best = window;", new: "long best = 0;"}]
+  - id: recompute_every_window
+    static: recomputed_window
+    full:
+      python: |
+        def max_window_sum(nums, k):
+            if k <= 0 or k > len(nums):
+                return 0
+            best = None
+            for i in range(len(nums) - k + 1):
+                total = 0
+                for j in range(i, i + k):
+                    total += nums[j]
+                if best is None or total > best:
+                    best = total
+            return best
+      javascript: |
+        function maxWindowSum(nums, k) {
+          if (k <= 0 || k > nums.length) return 0;
+          let best = null;
+          for (let i = 0; i + k <= nums.length; i++) {
+            let total = 0;
+            for (let j = i; j < i + k; j++) total += nums[j];
+            if (best === null || total > best) best = total;
+          }
+          return best;
+        }
+        module.exports = { maxWindowSum };
+      go: |
+        package solution
+
+        func MaxWindowSum(nums []int, k int) int {
+        	if k <= 0 || k > len(nums) {
+        		return 0
+        	}
+        	best := 0
+        	for i := 0; i+k <= len(nums); i++ {
+        		total := 0
+        		for j := i; j < i+k; j++ {
+        			total += nums[j]
+        		}
+        		if i == 0 || total > best {
+        			best = total
+        		}
+        	}
+        	return best
+        }
+      java: |
+        public class Solution {
+            public static long maxWindowSum(int[] nums, int k) {
+                if (k <= 0 || k > nums.length) return 0;
+                long best = 0;
+                for (int i = 0; i + k <= nums.length; i++) {
+                    long total = 0;
+                    for (int j = i; j < i + k; j++) total += nums[j];
+                    if (i == 0 || total > best) best = total;
+                }
+                return best;
+            }
+        }

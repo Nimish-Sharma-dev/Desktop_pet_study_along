@@ -1,0 +1,8 @@
+[
+ {"channel":"pet_state","payload":{"state":"thinking"}},
+ {"channel":"bubble","payload":{"text":"What happens to your loop when the list has exactly one element?","question":"What happens to your loop when the list has exactly one element?","hint_level":0,"targets_concept":"array_indexing","mistake_id":"boundary_off_by_one"}},
+ {"channel":"graph_update","payload":{"cypher":"(only when inspector is on)","query_ms":3.2,"nodes":[],"edges":[]}},
+ {"channel":"mastery_update","payload":{"student_id":"local-user","mastery":[{"concept_id":"array_indexing","score":0.4}]}},
+ {"channel":"confetti","payload":{"lesson_id":"binary-search"}},
+ {"channel":"mode","payload":{"mode":"dsa","lesson_id":"binary-search"}}
+]

@@ -1,0 +1,13 @@
+id: binary-search
+title: Binary Search
+track: dsa
+difficulty: 2
+concepts: [array_indexing, loop_invariants, binary_search]
+prerequisites: [arrays]
+estimated_minutes: 25
+common_mistakes:
+  - id: boundary_off_by_one
+    concepts: [array_indexing]
+    signals: ["single-element test raises IndexError", "hi = len(arr)"]
+    seed_questions: ["What happens when the list has exactly one element?"]
+languages: [python, java, javascript]

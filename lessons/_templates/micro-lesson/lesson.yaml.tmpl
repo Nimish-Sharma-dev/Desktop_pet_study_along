@@ -1,0 +1,14 @@
+# Micro-lesson template. Placeholders are filled by analysis.microlesson.generate_micro_lesson().
+id: micro-${concept}
+title: "Micro-lesson: ${name}"
+track: ${track}
+difficulty: 1
+concepts: [${concept}]
+prerequisites: []
+estimated_minutes: 10
+common_mistakes:
+  - id: weak_${concept}
+    concepts: [${concept}]
+    signals: ["test:test_*", "error:*"]
+    seed_questions: []        # filled from concepts.yaml `questions`
+languages: [python]

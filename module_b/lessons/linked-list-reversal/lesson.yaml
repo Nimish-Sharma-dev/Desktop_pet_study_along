@@ -1,0 +1,25 @@
+id: linked-list-reversal
+title: Linked List Reversal
+track: dsa
+difficulty: 2
+concepts: [linked_lists, pointers, edge_cases, recursion]
+prerequisites: [recursion-basics]
+estimated_minutes: 25
+common_mistakes:
+  - id: missing_null_check
+    concepts: [edge_cases, pointers]
+    signals: ["rule:missing_null_check", "test:test_hidden_empty", "error:NullReference"]
+    seed_questions:
+      - "What does head point to when the list is empty? What happens when you read head.next then?"
+      - "At the moment your loop condition is evaluated, can the node it dereferences be missing?"
+  - id: lost_pointer
+    concepts: [pointers, linked_lists]
+    signals: ["test:test_five_nodes", "test:test_two_nodes"]
+    seed_questions:
+      - "Draw three nodes. When you overwrite curr.next, which node can you no longer reach unless you saved it first?"
+  - id: deep_recursion_overflow
+    concepts: [recursion, call_stack]
+    signals: ["error:RecursionError", "test:test_hidden_long"]
+    seed_questions:
+      - "How many stack frames does your solution use for a 5,000-node list? How could you use constant extra space?"
+languages: [python, javascript, go, java]

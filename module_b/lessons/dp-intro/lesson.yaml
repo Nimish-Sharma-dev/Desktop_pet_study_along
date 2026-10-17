@@ -1,0 +1,24 @@
+id: dp-intro
+title: Dynamic Programming Intro
+track: dsa
+difficulty: 3
+concepts: [dp, memoization, optimal_substructure, recursion, time_complexity]
+prerequisites: [recursion-basics]
+estimated_minutes: 40
+common_mistakes:
+  - id: repeated_subproblems
+    concepts: [memoization, dp, time_complexity]
+    signals: ["test:test_hidden_stairs_forty_five", "test:test_hidden_coins_larger", "error:Timeout"]
+    seed_questions:
+      - "Count how many times your function is called with the same argument. What could you remember instead of recomputing?"
+  - id: greedy_instead_of_dp
+    concepts: [dp, optimal_substructure]
+    signals: ["test:test_coins_greedy_fails"]
+    seed_questions:
+      - "For [1,3,4] and amount 6, does taking the biggest coin first always lead to the best answer? What would you need to compare?"
+  - id: unreachable_not_handled
+    concepts: [dp, edge_cases]
+    signals: ["test:test_coins_impossible", "test:test_hidden_coins_unreachable", "test:test_hidden_coins_empty_set"]
+    seed_questions:
+      - "What value does your table hold for an amount that no combination can make? Does the final answer distinguish it from a real answer?"
+languages: [python, javascript, go, java]

@@ -1,0 +1,25 @@
+title: Hash Maps
+functions:
+  - name: two_sum
+    doc: "nums is unsorted. Return [i, j] with i < j and nums[i] + nums[j] == target (an element may not be used twice), or [] if none. Use O(n) time."
+    params: [{name: nums, type: int_list}, {name: target, type: int}]
+    returns: int_list
+    cases:
+      - {name: sum_basic, args: [[2,7,11,15], 9], expected: [0,1]}
+      - {name: sum_not_first, args: [[3,2,4], 6], expected: [1,2]}
+      - {name: sum_duplicates, args: [[3,3], 6], expected: [0,1]}
+      - {name: sum_none, args: [[1,2,3], 7], expected: []}
+      - {name: hidden_sum_empty, hidden: true, args: [[], 4], expected: []}
+      - {name: hidden_sum_no_self_reuse, hidden: true, args: [[5], 10], expected: []}
+      - {name: hidden_sum_negatives, hidden: true, args: [[-3,4,3,90], 0], expected: [0,2]}
+      - {name: hidden_sum_large, hidden: true, args: [{gen: range, args: [0, 300000, 1]}, 599997], expected: [299998, 299999]}
+  - name: is_anagram
+    doc: "Return true if s and t contain exactly the same characters with the same counts."
+    params: [{name: s, type: string}, {name: t, type: string}]
+    returns: bool
+    cases:
+      - {name: anagram_yes, args: ["listen", "silent"], expected: true}
+      - {name: anagram_no, args: ["rat", "car"], expected: false}
+      - {name: hidden_anagram_empty, hidden: true, args: ["", ""], expected: true}
+      - {name: hidden_anagram_length_differs, hidden: true, args: ["a", "ab"], expected: false}
+      - {name: hidden_anagram_same_letters_different_counts, hidden: true, args: ["aacc", "ccac"], expected: false}

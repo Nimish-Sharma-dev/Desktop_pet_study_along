@@ -1,0 +1,25 @@
+id: sliding-window
+title: Sliding Window
+track: dsa
+difficulty: 3
+concepts: [sliding_window, array_indexing, time_complexity, edge_cases]
+prerequisites: [two-pointers]
+estimated_minutes: 25
+common_mistakes:
+  - id: boundary_off_by_one
+    concepts: [array_indexing, loop_invariants]
+    signals: ["rule:loop_bound_off_by_one", "error:IndexError"]
+    seed_questions:
+      - "What is the last index you read in the final iteration? Is it a valid index?"
+      - "For a list of length 6 and k = 3, how many windows are there, and where does each start?"
+  - id: wrong_initial_best
+    concepts: [sliding_window, edge_cases]
+    signals: ["test:test_all_negative"]
+    seed_questions:
+      - "What is the best sum you have seen before looking at any window? Does that starting value make sense if every number is negative?"
+  - id: recomputed_window
+    concepts: [sliding_window, time_complexity]
+    signals: ["rule:nested_loop_quadratic", "test:test_hidden_large", "error:Timeout"]
+    seed_questions:
+      - "When the window moves one step, how many elements enter it and how many leave? How much of the previous sum can you reuse?"
+languages: [python, javascript, go, java]

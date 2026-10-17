@@ -1,0 +1,5 @@
+flowchart LR
+  C[Client] --> CDN --> LB[Load balancer] --> A[Stateless app servers]
+  A --> R[(Redis cache)]
+  A --> D[(Sharded key-value DB + replicas)]
+  A --> K[Counter service]

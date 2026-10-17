@@ -1,0 +1,16 @@
+title: Sliding Window
+functions:
+  - name: max_window_sum
+    doc: "Return the largest sum of any k consecutive elements of nums. If k <= 0 or k > len(nums), return 0."
+    params: [{name: nums, type: int_list}, {name: k, type: int}]
+    returns: long
+    cases:
+      - {name: basic, args: [[1,4,2,10,2,3,1,0,20], 4], expected: 24}
+      - {name: small_window, args: [[2,1,5,1,3,2], 3], expected: 9}
+      - {name: one_element, args: [[5], 1], expected: 5}
+      - {name: all_negative, args: [[-3,-1,-2], 2], expected: -3}
+      - {name: hidden_window_is_whole_list, hidden: true, args: [[1,2,3], 3], expected: 6}
+      - {name: hidden_window_too_big, hidden: true, args: [[1,2], 5], expected: 0}
+      - {name: hidden_empty, hidden: true, args: [[], 3], expected: 0}
+      - {name: hidden_zero_window, hidden: true, args: [[1,2,3], 0], expected: 0}
+      - {name: hidden_large, hidden: true, args: [{gen: range, args: [0, 1500000, 1]}, 5000], expected: {eval: "sum(range(1495000, 1500000))"}}

@@ -1,0 +1,13 @@
+# FalkorDB for the Tutor Pet. Bound to localhost only: all data stays on this machine.
+services:
+  falkordb:
+    image: falkordb/falkordb:latest
+    container_name: tutor-falkordb
+    ports:
+      - "127.0.0.1:6379:6379"   # Redis protocol (daemon / graph module)
+      - "127.0.0.1:3000:3000"   # FalkorDB Browser (handy for debugging graph queries)
+    volumes:
+      - falkordb_data:/var/lib/falkordb/data
+    restart: unless-stopped
+volumes:
+  falkordb_data:

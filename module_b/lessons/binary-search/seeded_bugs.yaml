@@ -1,0 +1,21 @@
+bugs:
+  - id: upper_bound_is_length
+    static: boundary_off_by_one          # analysis must report this mistake_id in every language
+    static_only: [javascript]            # JS returns undefined instead of throwing, so tests cannot see it
+    patches:
+      python:     [{old: "hi = len(nums) - 1", new: "hi = len(nums)"}]
+      javascript: [{old: "let hi = nums.length - 1;", new: "let hi = nums.length;"}]
+      go:         [{old: "hi := len(nums) - 1", new: "hi := len(nums)"}]
+      java:       [{old: "int hi = nums.length - 1;", new: "int hi = nums.length;"}]
+  - id: lo_never_advances
+    patches:
+      python:     [{old: "lo = mid + 1", new: "lo = mid"}]
+      javascript: [{old: "lo = mid + 1;", new: "lo = mid;"}]
+      go:         [{old: "lo = mid + 1", new: "lo = mid"}]
+      java:       [{old: "lo = mid + 1;", new: "lo = mid;"}]
+  - id: strict_less_than
+    patches:
+      python:     [{old: "lo <= hi", new: "lo < hi"}]
+      javascript: [{old: "lo <= hi", new: "lo < hi"}]
+      go:         [{old: "lo <= hi", new: "lo < hi"}]
+      java:       [{old: "lo <= hi", new: "lo < hi"}]

@@ -1,0 +1,25 @@
+title: Graphs - BFS and DFS
+functions:
+  - name: shortest_path
+    doc: "Undirected graph with nodes 0..n-1 and edge list [[u,v],...]. Return the fewest edges from src to dst, or -1 if unreachable."
+    params: [{name: n, type: int}, {name: edges, type: int_list_list}, {name: src, type: int}, {name: dst, type: int}]
+    returns: int
+    cases:
+      - {name: path_chain, args: [5, [[0,1],[1,2],[2,3],[3,4]], 0, 4], expected: 4}
+      - {name: path_uses_shortcut, args: [5, [[0,1],[1,2],[2,3],[3,4],[0,4]], 0, 3], expected: 2}
+      - {name: path_unreachable, args: [4, [[0,1],[2,3]], 0, 3], expected: -1}
+      - {name: path_same_node, args: [3, [[0,1]], 2, 2], expected: 0}
+      - {name: hidden_path_cycle_terminates, hidden: true, args: [4, [[0,1],[1,2],[2,3],[3,0]], 0, 2], expected: 2}
+      - {name: hidden_path_single_node, hidden: true, args: [1, [], 0, 0], expected: 0}
+      - {name: hidden_path_long_chain, hidden: true, args: [3000, {gen: chain_edges, args: [3000]}, 0, 2999], expected: 2999}
+  - name: count_components
+    doc: "Return the number of connected components of the undirected graph with nodes 0..n-1."
+    params: [{name: n, type: int}, {name: edges, type: int_list_list}]
+    returns: int
+    cases:
+      - {name: components_two_pairs, args: [5, [[0,1],[2,3]]], expected: 3}
+      - {name: components_connected, args: [3, [[0,1],[1,2]]], expected: 1}
+      - {name: hidden_components_no_nodes, hidden: true, args: [0, []], expected: 0}
+      - {name: hidden_components_cycle, hidden: true, args: [4, [[0,1],[1,2],[2,3],[3,0]]], expected: 1}
+      - {name: hidden_components_isolated, hidden: true, args: [4, []], expected: 4}
+      - {name: hidden_components_deep_chain, hidden: true, args: [3000, {gen: chain_edges, args: [3000]}], expected: 1}
